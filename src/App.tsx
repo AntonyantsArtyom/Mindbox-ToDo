@@ -1,7 +1,7 @@
-import { Input, Typography, Card, Checkbox, Flex, Radio, Button } from "antd";
+import { Input, Card, Checkbox, Flex, Radio, Button, ConfigProvider } from "antd";
 import { useState, type KeyboardEventHandler } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { ContainerStyled, TitleStyled } from "./App.styles";
+import { ContainerStyled, GlobalStyle, themeConfig, TitleStyled } from "./App.styles";
 
 interface ITask {
   value: string;
@@ -44,27 +44,30 @@ function App() {
   });
 
   return (
-    <ContainerStyled>
-      <TitleStyled>todos</TitleStyled>
-      <Card>
-        <Input onPressEnter={addNewTask} name="new_task" placeholder="введите новую задачу..." />
-        <Flex vertical>
-          {filteredTasks.map((task) => (
-            <Checkbox key={task.value} checked={task.checked} onChange={() => toggleChecked(task.value)}>
-              {task.description}
-            </Checkbox>
-          ))}
-        </Flex>
-        <Flex>
-          <Radio.Group value={filter} onChange={(e) => setFilter(e.target.value)}>
-            <Radio.Button value="All">все</Radio.Button>
-            <Radio.Button value="Active">активные</Radio.Button>
-            <Radio.Button value="Completed">выполненные</Radio.Button>
-          </Radio.Group>
-          <Button onClick={clearCompleted}>очистить выполненные</Button>
-        </Flex>
-      </Card>
-    </ContainerStyled>
+    <ConfigProvider theme={themeConfig}>
+      <GlobalStyle />
+      <ContainerStyled>
+        <TitleStyled>todos</TitleStyled>
+        <Card>
+          <Input onPressEnter={addNewTask} name="new_task" placeholder="введите новую задачу..." />
+          <Flex vertical>
+            {filteredTasks.map((task) => (
+              <Checkbox key={task.value} checked={task.checked} onChange={() => toggleChecked(task.value)}>
+                {task.description}
+              </Checkbox>
+            ))}
+          </Flex>
+          <Flex>
+            <Radio.Group value={filter} onChange={(e) => setFilter(e.target.value)}>
+              <Radio.Button value="All">все</Radio.Button>
+              <Radio.Button value="Active">активные</Radio.Button>
+              <Radio.Button value="Completed">выполненные</Radio.Button>
+            </Radio.Group>
+            <Button onClick={clearCompleted}>очистить выполненные</Button>
+          </Flex>
+        </Card>
+      </ContainerStyled>
+    </ConfigProvider>
   );
 }
 

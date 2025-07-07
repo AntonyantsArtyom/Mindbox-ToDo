@@ -1,5 +1,21 @@
 import { Typography } from "antd";
 import styled from "styled-components";
+import { createGlobalStyle } from "styled-components";
+
+export const GlobalStyle = createGlobalStyle`
+  body {
+    background-color: #000;
+  }
+`;
+
+export const themeConfig = {
+  token: {
+    colorText: "#ffffff",
+    colorTextPlaceholder: "#ffffff",
+    colorBgContainer: "#19191b",
+    colorPrimary: "#087829",
+  },
+};
 
 export const ContainerStyled = styled.div`
   justify-items: center;
