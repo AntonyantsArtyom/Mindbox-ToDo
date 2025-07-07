@@ -1,4 +1,4 @@
-import { Typography } from "antd";
+import { Card, Typography } from "antd";
 import styled from "styled-components";
 import { createGlobalStyle } from "styled-components";
 
@@ -30,4 +30,16 @@ export const TitleStyled = styled(Typography.Title)`
     font-weight: 300;
     font-size: 64px;
   }
+`;
+
+export const TextStyled = styled(Typography.Paragraph)`
+  && {
+    padding: 0px;
+    margin: 0px;
+    font-size: 12px;
+  }
+`;
+
+export const CardStyled = styled(Card)`
+  width: 360px;
 `;

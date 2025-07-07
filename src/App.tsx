@@ -1,7 +1,7 @@
-import { Input, Card, Checkbox, Flex, Radio, Button, ConfigProvider } from "antd";
+import { Input, Checkbox, Flex, Button, ConfigProvider, Tabs } from "antd";
 import { useState, type KeyboardEventHandler } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { ContainerStyled, GlobalStyle, themeConfig, TitleStyled } from "./App.styles";
+import { CardStyled, ContainerStyled, GlobalStyle, TextStyled, themeConfig, TitleStyled } from "./App.styles";
 
 interface ITask {
   value: string;
@@ -48,8 +48,8 @@ function App() {
       <GlobalStyle />
       <ContainerStyled>
         <TitleStyled>todos</TitleStyled>
-        <Card>
-          <Input onPressEnter={addNewTask} name="new_task" placeholder="введите новую задачу..." />
+        <CardStyled>
+          <Input variant="underlined" onPressEnter={addNewTask} name="new_task" placeholder="введите новую задачу..." />
           <Flex vertical>
             {filteredTasks.map((task) => (
               <Checkbox key={task.value} checked={task.checked} onChange={() => toggleChecked(task.value)}>
@@ -57,15 +57,20 @@ function App() {
               </Checkbox>
             ))}
           </Flex>
-          <Flex>
-            <Radio.Group value={filter} onChange={(e) => setFilter(e.target.value)}>
-              <Radio.Button value="All">все</Radio.Button>
-              <Radio.Button value="Active">активные</Radio.Button>
-              <Radio.Button value="Completed">выполненные</Radio.Button>
-            </Radio.Group>
-            <Button onClick={clearCompleted}>очистить выполненные</Button>
+          <Tabs
+            activeKey={filter}
+            onChange={(key) => setFilter(key as "All" | "Active" | "Completed")}
+            items={[
+              { key: "All", label: "все задачи" },
+              { key: "Active", label: "активные" },
+              { key: "Completed", label: "завершенные" },
+            ]}
+          />
+          <Flex align="center" justify="space-between">
+            <TextStyled>осталось задач: {tasks.filter((t) => !t.checked).length}</TextStyled>
+            <Button onClick={clearCompleted}>убрать завершенные</Button>
           </Flex>
-        </Card>
+        </CardStyled>
       </ContainerStyled>
     </ConfigProvider>
   );
