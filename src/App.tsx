@@ -1,32 +1,68 @@
 import { Input, Typography, Card, Checkbox, Flex, Radio, Button } from "antd";
+import { useState, type KeyboardEventHandler } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 const { Title } = Typography;
 
 interface ITask {
+  value: string;
   description: string;
   checked: boolean;
 }
 
 function App() {
-  const tasks: ITask[] = [{ description: "сделать TODO", checked: true }];
+  const [tasks, setTasks] = useState<ITask[]>([]);
+  const [filter, setFilter] = useState<"All" | "Active" | "Completed">("All");
+
+  const addNewTask: KeyboardEventHandler<HTMLInputElement> = (e) => {
+    const value = e.currentTarget.value.trim();
+    if (!value) return;
+
+    setTasks((tasks) => [
+      ...tasks,
+      {
+        value: uuidv4(),
+        description: value,
+        checked: false,
+      },
+    ]);
+
+    e.currentTarget.value = "";
+  };
+
+  const toggleChecked = (value: string) => {
+    setTasks((tasks) => tasks.map((task) => (task.value === value ? { ...task, checked: !task.checked } : task)));
+  };
+
+  const clearCompleted = () => {
+    setTasks((tasks) => tasks.filter((task) => !task.checked));
+  };
+
+  const filteredTasks = tasks.filter((task) => {
+    if (filter === "Active") return !task.checked;
+    if (filter === "Completed") return task.checked;
+    return true;
+  });
 
   return (
     <>
       <Title>todos</Title>
       <Card>
-        <Input name="new_task" variant="underlined" placeholder="введите новую задачу..." />
+        <Input onPressEnter={addNewTask} name="new_task" placeholder="введите новую задачу..." />
         <Flex vertical>
-          {tasks.map((task) => (
-            <Checkbox checked={task.checked}>{task.description}</Checkbox>
+          {filteredTasks.map((task) => (
+            <Checkbox key={task.value} checked={task.checked} onChange={() => toggleChecked(task.value)}>
+              {task.description}
+            </Checkbox>
           ))}
         </Flex>
         <Flex>
-          <Radio.Group defaultValue="All">
+          <Radio.Group value={filter} onChange={(e) => setFilter(e.target.value)}>
             <Radio.Button value="All">все</Radio.Button>
             <Radio.Button value="Active">активные</Radio.Button>
             <Radio.Button value="Completed">выполненные</Radio.Button>
           </Radio.Group>
-          <Button>очистить выполненные</Button>
+          <Button onClick={clearCompleted}>очистить выполненные</Button>
         </Flex>
       </Card>
     </>
