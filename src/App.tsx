@@ -68,7 +68,7 @@ function App() {
           />
           <Flex align="center" justify="space-between">
             <TextStyled>осталось задач: {tasks.filter((t) => !t.checked).length}</TextStyled>
-            <Button onClick={clearCompleted}>убрать завершенные</Button>
+            <Button onClick={clearCompleted}>очистить завершенные</Button>
           </Flex>
         </CardStyled>
       </ContainerStyled>
