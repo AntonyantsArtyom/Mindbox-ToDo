@@ -1,8 +1,7 @@
 import { Input, Typography, Card, Checkbox, Flex, Radio, Button } from "antd";
 import { useState, type KeyboardEventHandler } from "react";
 import { v4 as uuidv4 } from "uuid";
-
-const { Title } = Typography;
+import { ContainerStyled, TitleStyled } from "./App.styles";
 
 interface ITask {
   value: string;
@@ -45,8 +44,8 @@ function App() {
   });
 
   return (
-    <>
-      <Title>todos</Title>
+    <ContainerStyled>
+      <TitleStyled>todos</TitleStyled>
       <Card>
         <Input onPressEnter={addNewTask} name="new_task" placeholder="введите новую задачу..." />
         <Flex vertical>
@@ -65,7 +64,7 @@ function App() {
           <Button onClick={clearCompleted}>очистить выполненные</Button>
         </Flex>
       </Card>
-    </>
+    </ContainerStyled>
   );
 }
 
