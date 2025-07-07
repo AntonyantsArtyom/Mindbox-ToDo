@@ -2,8 +2,13 @@ import { Input, Typography, Card, Checkbox, Flex, Radio, Button } from "antd";
 
 const { Title } = Typography;
 
+interface ITask {
+  description: string;
+  checked: boolean;
+}
+
 function App() {
-  const tasks = ["сделать TODO", "пофиксить баги"];
+  const tasks: ITask[] = [{ description: "сделать TODO", checked: true }];
 
   return (
     <>
@@ -12,7 +17,7 @@ function App() {
         <Input name="new_task" variant="underlined" placeholder="введите новую задачу..." />
         <Flex vertical>
           {tasks.map((task) => (
-            <Checkbox>{task}</Checkbox>
+            <Checkbox checked={task.checked}>{task.description}</Checkbox>
           ))}
         </Flex>
         <Flex>
