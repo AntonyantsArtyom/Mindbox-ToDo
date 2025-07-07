@@ -1,4 +1,4 @@
-import { Card, Typography } from "antd";
+import { Card, Tabs, Typography } from "antd";
 import styled from "styled-components";
 import { createGlobalStyle } from "styled-components";
 
@@ -42,4 +42,18 @@ export const TextStyled = styled(Typography.Paragraph)`
 
 export const CardStyled = styled(Card)`
   width: 360px;
+`;
+
+export const TabsStyled = styled(Tabs)`
+  .ant-tabs-nav-list {
+    display: flex;
+    width: 100%;
+  }
+  .ant-tabs-tab {
+    flex: 1;
+    justify-content: center;
+  }
+  .ant-tabs-nav::before {
+    display: none;
+  }
 `;

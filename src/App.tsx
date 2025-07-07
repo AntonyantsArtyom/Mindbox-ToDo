@@ -1,7 +1,7 @@
 import { Input, Checkbox, Flex, Button, ConfigProvider, Tabs } from "antd";
 import { useState, type KeyboardEventHandler } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { CardStyled, ContainerStyled, GlobalStyle, TextStyled, themeConfig, TitleStyled } from "./App.styles";
+import { CardStyled, ContainerStyled, GlobalStyle, TabsStyled, TextStyled, themeConfig, TitleStyled } from "./App.styles";
 
 interface ITask {
   value: string;
@@ -57,7 +57,7 @@ function App() {
               </Checkbox>
             ))}
           </Flex>
-          <Tabs
+          <TabsStyled
             activeKey={filter}
             onChange={(key) => setFilter(key as "All" | "Active" | "Completed")}
             items={[
