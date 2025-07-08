@@ -66,6 +66,7 @@ function App() {
             ))}
           </TasksListStyled>
           <TabsStyled
+            key={i18n.language}
             activeKey={filter}
             onChange={(key) => setFilter(key as TTaskTypes)}
             items={[
