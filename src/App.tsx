@@ -1,10 +1,13 @@
 import { Input, Checkbox, Button, ConfigProvider } from "antd";
 import { useEffect, useState, type ChangeEventHandler, type KeyboardEventHandler } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { CardStyled, ContainerStyled, FooterStyled, GlobalStyle, TabsStyled, TasksListStyled, TaskTextStyled, TextStyled, themeConfig, TitleStyled } from "./App.styles";
+import { CardStyled, ContainerStyled, FooterStyled, GlobalStyle, SettingsAreaStyled, TabsStyled, TasksListStyled, TaskTextStyled, TextStyled, themeConfig, TitleStyled } from "./App.styles";
 import type { ITask, TTaskTypes } from "./App.types";
+import { useTranslation } from "react-i18next";
 
 function App() {
+  const { t, i18n } = useTranslation();
+
   const localStorageTasks = localStorage.getItem("tasks");
   const [tasks, setTasks] = useState<ITask[]>(localStorageTasks ? JSON.parse(localStorageTasks) : []);
   const [newTaskText, setNewTaskText] = useState("");
@@ -52,9 +55,9 @@ function App() {
     <ConfigProvider theme={themeConfig}>
       <GlobalStyle />
       <ContainerStyled>
-        <TitleStyled>todos</TitleStyled>
+        <TitleStyled className="title">{t("title")}</TitleStyled>
         <CardStyled>
-          <Input value={newTaskText} onChange={inputChangeHandler} variant="underlined" onPressEnter={addNewTask} name="new_task" placeholder="введите новую задачу..." />
+          <Input value={newTaskText} onChange={inputChangeHandler} variant="underlined" onPressEnter={addNewTask} name="new_task" placeholder={t("placeholder")} />
           <TasksListStyled>
             {filteredTasks.map((task) => (
               <Checkbox key={task.value} checked={task.checked} onChange={() => toggleChecked(task.value)}>
@@ -66,16 +69,21 @@ function App() {
             activeKey={filter}
             onChange={(key) => setFilter(key as TTaskTypes)}
             items={[
-              { key: "All", label: "все задачи" },
-              { key: "Active", label: "активные" },
-              { key: "Completed", label: "завершенные" },
+              { key: "All", label: t("all") },
+              { key: "Active", label: t("active") },
+              { key: "Completed", label: t("completed") },
             ]}
           />
           <FooterStyled>
-            <TextStyled>осталось задач: {tasks.filter((t) => !t.checked).length}</TextStyled>
-            <Button onClick={clearCompleted}>очистить завершенные</Button>
+            <TextStyled>{t("left", { count: tasks.filter((t) => !t.checked).length })}</TextStyled>
+            <Button onClick={clearCompleted}>{t("clear")}</Button>
           </FooterStyled>
         </CardStyled>
+        <SettingsAreaStyled>
+          <Button className="langButton" onClick={() => i18n.changeLanguage(i18n.language === "ru" ? "en" : "ru")}>
+            {i18n.language === "ru" ? "RU" : "EN"}
+          </Button>
+        </SettingsAreaStyled>
       </ContainerStyled>
     </ConfigProvider>
   );

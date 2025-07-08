@@ -41,7 +41,7 @@ export const TextStyled = styled(Typography.Paragraph)`
 `;
 
 export const CardStyled = styled(Card)`
-  width: 360px;
+  width: 340px;
 `;
 
 export const TabsStyled = styled(Tabs)`
@@ -63,8 +63,7 @@ export const TasksListStyled = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  min-height: 300px;
-  max-height: 400px;
+  height: 350px;
   overflow-y: auto;
 
   scrollbar-width: thin;
@@ -99,4 +98,9 @@ export const FooterStyled = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+`;
+
+export const SettingsAreaStyled = styled.div`
+  width: 340px;
+  margin: auto;
 `;

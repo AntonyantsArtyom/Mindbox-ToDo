@@ -1,0 +1,9 @@
+{
+  "title": "todos",
+  "placeholder": "enter a new task...",
+  "all": "all tasks",
+  "active": "active",
+  "completed": "completed",
+  "left": "{{count}} left",
+  "clear": "clear completed"
+}
