@@ -1,5 +1,5 @@
 import { Input, Checkbox, Flex, Button, ConfigProvider } from "antd";
-import { useState, type ChangeEventHandler, type KeyboardEventHandler } from "react";
+import { useEffect, useState, type ChangeEventHandler, type KeyboardEventHandler } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { CardStyled, ContainerStyled, GlobalStyle, TabsStyled, TasksListStyled, TaskTextStyled, TextStyled, themeConfig, TitleStyled } from "./App.styles";
 
@@ -12,9 +12,14 @@ interface ITask {
 type TTaskTypes = "All" | "Active" | "Completed";
 
 function App() {
-  const [tasks, setTasks] = useState<ITask[]>([]);
+  const localStorageTasks = localStorage.getItem("tasks");
+  const [tasks, setTasks] = useState<ITask[]>(localStorageTasks ? JSON.parse(localStorageTasks) : []);
   const [newTaskText, setNewTaskText] = useState("");
   const [filter, setFilter] = useState<TTaskTypes>("All");
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   const addNewTask: KeyboardEventHandler<HTMLInputElement> = () => {
     const value = newTaskText.trim();
