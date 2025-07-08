@@ -57,7 +57,7 @@ function App() {
       <ContainerStyled>
         <TitleStyled className="title">{t("title")}</TitleStyled>
         <CardStyled>
-          <Input value={newTaskText} onChange={inputChangeHandler} variant="underlined" onPressEnter={addNewTask} name="new_task" placeholder={t("placeholder")} />
+          <Input value={newTaskText} onChange={inputChangeHandler} variant="underlined" onPressEnter={addNewTask} data-testid="new-task-input" placeholder={t("placeholder")} />
           <TasksListStyled>
             {filteredTasks.map((task) => (
               <Checkbox key={task.value} checked={task.checked} onChange={() => toggleChecked(task.value)}>
@@ -76,11 +76,13 @@ function App() {
           />
           <FooterStyled>
             <TextStyled>{t("left", { count: tasks.filter((t) => !t.checked).length })}</TextStyled>
-            <Button onClick={clearCompleted}>{t("clear")}</Button>
+            <Button data-testid="clear-button" onClick={clearCompleted}>
+              {t("clear")}
+            </Button>
           </FooterStyled>
         </CardStyled>
         <SettingsAreaStyled>
-          <Button className="langButton" onClick={() => i18n.changeLanguage(i18n.language === "ru" ? "en" : "ru")}>
+          <Button data-testid="lang-button" className="langButton" onClick={() => i18n.changeLanguage(i18n.language === "ru" ? "en" : "ru")}>
             {i18n.language === "ru" ? "RU" : "EN"}
           </Button>
         </SettingsAreaStyled>
