@@ -1,7 +1,7 @@
-import { Input, Checkbox, Flex, Button, ConfigProvider, Tabs } from "antd";
+import { Input, Checkbox, Flex, Button, ConfigProvider } from "antd";
 import { useState, type KeyboardEventHandler } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { CardStyled, ContainerStyled, GlobalStyle, TabsStyled, TextStyled, themeConfig, TitleStyled } from "./App.styles";
+import { CardStyled, ContainerStyled, GlobalStyle, TabsStyled, TasksListStyled, TextStyled, themeConfig, TitleStyled } from "./App.styles";
 
 interface ITask {
   value: string;
@@ -50,13 +50,13 @@ function App() {
         <TitleStyled>todos</TitleStyled>
         <CardStyled>
           <Input variant="underlined" onPressEnter={addNewTask} name="new_task" placeholder="введите новую задачу..." />
-          <Flex vertical>
+          <TasksListStyled>
             {filteredTasks.map((task) => (
               <Checkbox key={task.value} checked={task.checked} onChange={() => toggleChecked(task.value)}>
                 {task.description}
               </Checkbox>
             ))}
-          </Flex>
+          </TasksListStyled>
           <TabsStyled
             activeKey={filter}
             onChange={(key) => setFilter(key as "All" | "Active" | "Completed")}

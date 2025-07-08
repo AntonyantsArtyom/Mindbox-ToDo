@@ -57,3 +57,35 @@ export const TabsStyled = styled(Tabs)`
     display: none;
   }
 `;
+
+export const TasksListStyled = styled.div`
+  margin: 15px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 300px;
+  max-height: 400px;
+  overflow-y: auto;
+
+  scrollbar-width: thin;
+  scrollbar-color: #fff transparent;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #fff;
+    border-radius: 4px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: #fff;
+  }
+`;
