@@ -89,3 +89,8 @@ export const TasksListStyled = styled.div`
     background-color: #fff;
   }
 `;
+
+export const TaskTextStyled = styled.span<{ checked: boolean }>`
+  text-decoration: ${(props) => (props.checked ? "line-through" : "none")};
+  opacity: ${(props) => (props.checked ? 0.5 : 1)};
+`;

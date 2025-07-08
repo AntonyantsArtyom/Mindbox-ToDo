@@ -1,7 +1,7 @@
 import { Input, Checkbox, Flex, Button, ConfigProvider } from "antd";
 import { useState, type KeyboardEventHandler } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { CardStyled, ContainerStyled, GlobalStyle, TabsStyled, TasksListStyled, TextStyled, themeConfig, TitleStyled } from "./App.styles";
+import { CardStyled, ContainerStyled, GlobalStyle, TabsStyled, TasksListStyled, TaskTextStyled, TextStyled, themeConfig, TitleStyled } from "./App.styles";
 
 interface ITask {
   value: string;
@@ -53,7 +53,7 @@ function App() {
           <TasksListStyled>
             {filteredTasks.map((task) => (
               <Checkbox key={task.value} checked={task.checked} onChange={() => toggleChecked(task.value)}>
-                {task.description}
+                <TaskTextStyled checked={task.checked}>{task.description}</TaskTextStyled>
               </Checkbox>
             ))}
           </TasksListStyled>
