@@ -94,3 +94,9 @@ export const TaskTextStyled = styled.span<{ checked: boolean }>`
   text-decoration: ${(props) => (props.checked ? "line-through" : "none")};
   opacity: ${(props) => (props.checked ? 0.5 : 1)};
 `;
+
+export const FooterStyled = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;

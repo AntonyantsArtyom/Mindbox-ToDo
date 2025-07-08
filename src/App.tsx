@@ -1,7 +1,7 @@
-import { Input, Checkbox, Flex, Button, ConfigProvider } from "antd";
+import { Input, Checkbox, Button, ConfigProvider } from "antd";
 import { useEffect, useState, type ChangeEventHandler, type KeyboardEventHandler } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { CardStyled, ContainerStyled, GlobalStyle, TabsStyled, TasksListStyled, TaskTextStyled, TextStyled, themeConfig, TitleStyled } from "./App.styles";
+import { CardStyled, ContainerStyled, FooterStyled, GlobalStyle, TabsStyled, TasksListStyled, TaskTextStyled, TextStyled, themeConfig, TitleStyled } from "./App.styles";
 import type { ITask, TTaskTypes } from "./App.types";
 
 function App() {
@@ -71,10 +71,10 @@ function App() {
               { key: "Completed", label: "завершенные" },
             ]}
           />
-          <Flex align="center" justify="space-between">
+          <FooterStyled>
             <TextStyled>осталось задач: {tasks.filter((t) => !t.checked).length}</TextStyled>
             <Button onClick={clearCompleted}>очистить завершенные</Button>
-          </Flex>
+          </FooterStyled>
         </CardStyled>
       </ContainerStyled>
     </ConfigProvider>
