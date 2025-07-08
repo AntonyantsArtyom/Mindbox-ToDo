@@ -1,5 +1,5 @@
 import { Input, Checkbox, Flex, Button, ConfigProvider } from "antd";
-import { useState, type KeyboardEventHandler } from "react";
+import { useState, type ChangeEventHandler, type KeyboardEventHandler } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { CardStyled, ContainerStyled, GlobalStyle, TabsStyled, TasksListStyled, TaskTextStyled, TextStyled, themeConfig, TitleStyled } from "./App.styles";
 
@@ -9,12 +9,15 @@ interface ITask {
   checked: boolean;
 }
 
+type TTaskTypes = "All" | "Active" | "Completed";
+
 function App() {
   const [tasks, setTasks] = useState<ITask[]>([]);
-  const [filter, setFilter] = useState<"All" | "Active" | "Completed">("All");
+  const [newTaskText, setNewTaskText] = useState("");
+  const [filter, setFilter] = useState<TTaskTypes>("All");
 
-  const addNewTask: KeyboardEventHandler<HTMLInputElement> = (e) => {
-    const value = e.currentTarget.value.trim();
+  const addNewTask: KeyboardEventHandler<HTMLInputElement> = () => {
+    const value = newTaskText.trim();
     if (!value) return;
 
     setTasks((tasks) => [
@@ -26,7 +29,7 @@ function App() {
       },
     ]);
 
-    e.currentTarget.value = "";
+    setNewTaskText("");
   };
 
   const toggleChecked = (value: string) => {
@@ -35,6 +38,10 @@ function App() {
 
   const clearCompleted = () => {
     setTasks((tasks) => tasks.filter((task) => !task.checked));
+  };
+
+  const inputChangeHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setNewTaskText(e.target.value);
   };
 
   const filteredTasks = tasks.filter((task) => {
@@ -49,7 +56,7 @@ function App() {
       <ContainerStyled>
         <TitleStyled>todos</TitleStyled>
         <CardStyled>
-          <Input variant="underlined" onPressEnter={addNewTask} name="new_task" placeholder="введите новую задачу..." />
+          <Input value={newTaskText} onChange={inputChangeHandler} variant="underlined" onPressEnter={addNewTask} name="new_task" placeholder="введите новую задачу..." />
           <TasksListStyled>
             {filteredTasks.map((task) => (
               <Checkbox key={task.value} checked={task.checked} onChange={() => toggleChecked(task.value)}>
@@ -59,7 +66,7 @@ function App() {
           </TasksListStyled>
           <TabsStyled
             activeKey={filter}
-            onChange={(key) => setFilter(key as "All" | "Active" | "Completed")}
+            onChange={(key) => setFilter(key as TTaskTypes)}
             items={[
               { key: "All", label: "все задачи" },
               { key: "Active", label: "активные" },
