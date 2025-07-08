@@ -2,14 +2,7 @@ import { Input, Checkbox, Flex, Button, ConfigProvider } from "antd";
 import { useEffect, useState, type ChangeEventHandler, type KeyboardEventHandler } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { CardStyled, ContainerStyled, GlobalStyle, TabsStyled, TasksListStyled, TaskTextStyled, TextStyled, themeConfig, TitleStyled } from "./App.styles";
-
-interface ITask {
-  value: string;
-  description: string;
-  checked: boolean;
-}
-
-type TTaskTypes = "All" | "Active" | "Completed";
+import type { ITask, TTaskTypes } from "./App.types";
 
 function App() {
   const localStorageTasks = localStorage.getItem("tasks");
